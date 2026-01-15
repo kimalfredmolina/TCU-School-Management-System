@@ -6,15 +6,11 @@
 
 ## 1.0. Backend Installation Guide (Node.js + Express + MongoDB)
 
-### Express - Web framework (like Cloud Functions in Firebase)
-
-### CORS - Allow frontend to communicate with backend
-
-### Mongoose - MongoDB object modeling (better than raw mongodb driver)
-
-### Nodemon - Auto-restart server on file changes (dev tool)
-
-### Dotenv - Environment variables (for API keys and secrets)
+-  Express - Web framework (like Cloud Functions in Firebase)
+-  CORS - Allow frontend to communicate with backend
+-  Mongoose - MongoDB object modeling (better than raw mongodb driver)
+-  Nodemon - Auto-restart server on file changes (dev tool)
+-  Dotenv - Environment variables (for API keys and secrets)
 
 ```bash
 npm install express
