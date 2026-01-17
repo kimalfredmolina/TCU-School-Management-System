@@ -1,11 +1,10 @@
 import React from 'react'
+import StudentList from './pages/StudentList.jsx'
 
 const App = () => {
   return (
-    <div className='min-h-screen bg-black'>
-      <div className='text-white text-3xl p-4'>
-        Student Records App
-      </div>
+    <div>
+      <StudentList />
     </div>
   )
 }

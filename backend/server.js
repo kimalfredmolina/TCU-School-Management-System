@@ -20,15 +20,16 @@ const connectDB = async () => {
   }
 };
 
-// Connect to database
 connectDB();
 
-// Test route
+// Import routes
+const studentRoutes = require('./routes/students');
+
+// Routes
 app.get('/', (req, res) => {
   res.json({ message: 'Backend is running!' });
 });
 
-// Health check route
 app.get('/api/health', (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
   res.json({ 
@@ -38,8 +39,10 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Start server
+// Student API routes
+app.use('/api/students', studentRoutes);
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
-  console.log(`📍 http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });
