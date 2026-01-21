@@ -6,6 +6,11 @@ const studentSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  stud_id: {
+    type: String,
+    required: true,
+    trim: true
+  },
   email: {
     type: String,
     required: true,
@@ -14,6 +19,11 @@ const studentSchema = new mongoose.Schema({
     lowercase: true
   },
   course: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  year_level: {
     type: String,
     required: true,
     trim: true

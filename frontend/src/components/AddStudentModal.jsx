@@ -24,9 +24,25 @@ const AddStudentModal = ({
             </label>
             <input
               type="text"
+              placeholder='Juan Dela Cruz'
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
+              }
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Student Number
+            </label>
+            <input
+              type="text"
+              placeholder='22-00000'
+              value={formData.stud_id}
+              onChange={(e) =>
+                setFormData({ ...formData, stud_id: e.target.value })
               }
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
@@ -38,6 +54,7 @@ const AddStudentModal = ({
             </label>
             <input
               type="email"
+              placeholder='junan@gmail.com'
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -52,9 +69,25 @@ const AddStudentModal = ({
             </label>
             <input
               type="text"
+              placeholder='BSCS'
               value={formData.course}
               onChange={(e) =>
                 setFormData({ ...formData, course: e.target.value })
+              }
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Year Level
+            </label>
+            <input
+              type="text"
+              placeholder='4th Year'
+              value={formData.year_level}
+              onChange={(e) =>
+                setFormData({ ...formData, year_level: e.target.value })
               }
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />

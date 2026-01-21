@@ -29,8 +29,10 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const student = new Student({
     name: req.body.name,
+    stud_id: req.body.stud_id,
     email: req.body.email,
-    course: req.body.course
+    course: req.body.course,
+    year_level: req.body.year_level
   });
 
   try {
@@ -50,8 +52,10 @@ router.put('/:id', async (req, res) => {
     }
 
     student.name = req.body.name || student.name;
+    student.stud_id = req.body.stud_id || student.stud_id;
     student.email = req.body.email || student.email;
     student.course = req.body.course || student.course;
+    student.year_level = req.body.year_level || student.year_level;
 
     const updatedStudent = await student.save();
     res.json(updatedStudent);

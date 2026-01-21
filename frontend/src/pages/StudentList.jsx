@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:5000/api/students';
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
-  const [formData, setFormData] = useState({ name: '', email: '', course: '' });
+  const [formData, setFormData] = useState({ name: '', stud_id: '', email: '', course: '', year_level: '' });
   const [editId, setEditId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,8 +32,10 @@ const StudentList = () => {
 
   const filteredStudents = students.filter(student =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    student.stud_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.course.toLowerCase().includes(searchTerm.toLowerCase())
+    student.course.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    student.year_level.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleSubmit = async () => {
@@ -67,7 +69,7 @@ const StudentList = () => {
         }
       }
       
-      setFormData({ name: '', email: '', course: '' });
+      setFormData({ name: '', stud_id: '', email: '', course: '', year_level: '' });
       setEditId(null);
       setIsModalOpen(false);
     } catch (error) {
@@ -79,8 +81,10 @@ const StudentList = () => {
   const handleEdit = (student) => {
     setFormData({ 
       name: student.name, 
+      stud_id: student.stud_id,
       email: student.email, 
-      course: student.course 
+      course: student.course, 
+      year_level: student.year_level
     });
     setEditId(student._id);
     setIsModalOpen(true);
@@ -106,13 +110,13 @@ const StudentList = () => {
   };
 
   const handleCancel = () => {
-    setFormData({ name: '', email: '', course: '' });
+    setFormData({ name: '', stud_id: '', email: '', course: '', year_level: ''});
     setEditId(null);
     setIsModalOpen(false);
   };
 
   const openAddModal = () => {
-    setFormData({ name: '', email: '', course: '' });
+    setFormData({ name: '', stud_id: '', email: '', course: '', year_level: '' });
     setEditId(null);
     setIsModalOpen(true);
   };
@@ -149,7 +153,9 @@ const StudentList = () => {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student ID</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year Level</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
@@ -158,7 +164,9 @@ const StudentList = () => {
                   <tr key={student._id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{student.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.email}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.stud_id}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.course}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.year_level}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <button
                         onClick={() => handleEdit(student)}
