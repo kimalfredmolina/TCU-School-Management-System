@@ -43,7 +43,7 @@ const Sidebar = ({ activeRoute = 'student-list', onNavigate, isCollapsed, setIsC
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-700">
         {!isCollapsed && (
-          <h2 className="text-xl font-bold">Student Records</h2>
+          <h2 className="text-xl font-bold">Taguig City University</h2>
         )}
         <button
           onClick={toggleSidebar}

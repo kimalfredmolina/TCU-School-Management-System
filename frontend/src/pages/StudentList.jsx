@@ -5,7 +5,30 @@ const API_URL = 'http://localhost:5000/api/students';
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
-  const [formData, setFormData] = useState({ name: '', stud_id: '', email: '', course: '', year_level: '' });
+  const [formData, setFormData] = useState({ 
+    name: '', 
+    stud_id: '', 
+    email: '', 
+    course: '', 
+    year_level: '',
+    section: '',
+    enrollment_status: 'Regular',
+    date_of_birth: '',
+    gender: '',
+    contact_number: '',
+    address: {
+      street: '',
+      city: '',
+      province: '',
+      postal_code: '',
+      country: 'Philippines'
+    },
+    guardian_name: '',
+    guardian_contact: '',
+    guardian_relationship: '',
+    date_enrolled: '',
+    expected_graduation: ''
+  });
   const [editId, setEditId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -84,10 +107,22 @@ const StudentList = () => {
       stud_id: student.stud_id,
       email: student.email, 
       course: student.course, 
-      year_level: student.year_level
+      year_level: student.year_level,
+      section: student.section || '',
+      enrollment_status: student.enrollment_status || 'Regular',
+      date_of_birth: student.date_of_birth ? student.date_of_birth.split('T')[0] : '',
+      gender: student.gender || '',
+      contact_number: student.contact_number || '',
+      address: student.address || { street: '', city: '', province: '', postal_code: '', country: 'Philippines' },
+      guardian_name: student.guardian_name || '',
+      guardian_contact: student.guardian_contact || '',
+      guardian_relationship: student.guardian_relationship || '',
+      date_enrolled: student.date_enrolled ? student.date_enrolled.split('T')[0] : '',
+      expected_graduation: student.expected_graduation ? student.expected_graduation.split('T')[0] : '',
+      scholarship: student.scholarship || ''
     });
-    setEditId(student._id);
-    setIsModalOpen(true);
+  setEditId(student._id);
+  setIsModalOpen(true);
   };
 
   const handleDelete = async (id) => {
