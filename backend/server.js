@@ -24,6 +24,8 @@ connectDB();
 
 // Import routes
 const studentRoutes = require('./routes/students');
+const departmentRoutes = require('./routes/departments');
+const courseRoutes = require('./routes/courses');
 
 // Routes
 app.get('/', (req, res) => {
@@ -39,8 +41,10 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Student API routes
+// Use routes
 app.use('/api/students', studentRoutes);
+app.use('/api/departments', departmentRoutes);
+app.use('/api/courses', courseRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
