@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import AddStudentModal from '../components/AddStudentModal';
 
 const API_URL = 'http://localhost:5000/api/students';
+const DEPT_API_URL = 'http://localhost:5000/api/departments';
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
+  const [departments, setDepartments] = useState([]);
   const [formData, setFormData] = useState({ 
     name: '', 
     stud_id: '', 
@@ -37,6 +39,7 @@ const StudentList = () => {
   // Fetch students on mount
   useEffect(() => {
     fetchStudents();
+    fetchDepartments();
   }, []);
 
   const fetchStudents = async () => {
@@ -53,11 +56,35 @@ const StudentList = () => {
     }
   };
 
+  const fetchDepartments = async () => {
+    try {
+      const response = await fetch(DEPT_API_URL);
+      if (response.ok) {
+        const data = await response.json();
+        setDepartments(data.data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching departments:', error);
+    }
+  };
+
+  const departmentById = departments.reduce((acc, dept) => {
+    acc[dept._id] = dept;
+    return acc;
+  }, {});
+
+  const getDepartmentLabel = (departmentValue) => {
+    if (!departmentValue) return '';
+    const dept = departmentById[departmentValue];
+    if (dept) return `${dept.code} - ${dept.name}`;
+    return departmentValue;
+  };
+
   const filteredStudents = students.filter(student =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.stud_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.course.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    getDepartmentLabel(student.course).toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.year_level.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -102,11 +129,14 @@ const StudentList = () => {
   };
 
   const handleEdit = (student) => {
+    const matchedDepartment = departments.find(
+      (dept) => dept._id === student.course || dept.name === student.course || dept.code === student.course
+    );
     setFormData({ 
       name: student.name, 
       stud_id: student.stud_id,
       email: student.email, 
-      course: student.course, 
+      course: matchedDepartment ? matchedDepartment._id : student.course, 
       year_level: student.year_level,
       section: student.section || '',
       enrollment_status: student.enrollment_status || 'Regular',
@@ -172,7 +202,7 @@ const StudentList = () => {
         <div className="mb-4">
           <input
             type="text"
-            placeholder="Search by name, email, or course..."
+            placeholder="Search by name, email, or department..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -189,7 +219,7 @@ const StudentList = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student ID</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year Level</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
@@ -200,7 +230,7 @@ const StudentList = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{student.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.email}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.stud_id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.course}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{getDepartmentLabel(student.course)}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.year_level}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <button
@@ -234,6 +264,7 @@ const StudentList = () => {
         isOpen={isModalOpen}
         formData={formData}
         setFormData={setFormData}
+        departments={departments}
         editId={editId}
         onSubmit={handleSubmit}
         onCancel={handleCancel}

@@ -4,6 +4,7 @@ const AddStudentModal = ({
   isOpen,
   formData,
   setFormData,
+  departments = [],
   editId,
   onSubmit,
   onCancel
@@ -121,15 +122,20 @@ const AddStudentModal = ({
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Course <span className="text-red-500">*</span>
+              Department Enrolled <span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
-              placeholder="BSCS"
+            <select
               value={formData.course || ''}
               onChange={(e) => setFormData({ ...formData, course: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
+            >
+              <option value="">Select Department</option>
+              {departments.map((dept) => (
+                <option key={dept._id} value={dept._id}>
+                  {dept.code} - {dept.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
