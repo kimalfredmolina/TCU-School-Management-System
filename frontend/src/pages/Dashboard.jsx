@@ -62,34 +62,52 @@ const Dashboard = () => {
     const totalDepartments = departmentData.length;
     const totalCourses = courseData.length;
 
-    // Group students by department (from courses)
-    const departmentStudentCounts = {};
-    courseData.forEach(course => {
-      const deptId = course.department._id;
-      const deptName = course.department.name;
-      const deptCode = course.department.code;
-      
-      // Count students enrolled in courses of this department
-      const studentsInDept = studentData.filter(student => 
-        student.course && student.course.toLowerCase().includes(course.course_code.toLowerCase())
-      ).length;
-      
-      if (!departmentStudentCounts[deptId]) {
-        departmentStudentCounts[deptId] = {
-          department: deptName,
-          code: deptCode,
-          count: 0
-        };
-      }
-      departmentStudentCounts[deptId].count += studentsInDept;
+    const departmentLookup = {
+      byId: {},
+      byCode: {},
+      byName: {}
+    };
+    departmentData.forEach((dept) => {
+      if (dept._id) departmentLookup.byId[dept._id] = dept;
+      if (dept.code) departmentLookup.byCode[dept.code] = dept;
+      if (dept.name) departmentLookup.byName[dept.name] = dept;
     });
 
-    const byDepartment = Object.values(departmentStudentCounts)
+    const getDepartmentLabel = (value) => {
+      if (!value) return 'Unknown';
+      const dept =
+        departmentLookup.byId[value] ||
+        departmentLookup.byCode[value] ||
+        departmentLookup.byName[value];
+      if (!dept) return value;
+      if (dept.code && dept.name) return `${dept.code} - ${dept.name}`;
+      return dept.name || dept.code || value;
+    };
+
+    // Group students by department (based on student data)
+    const studentCountsByDepartmentId = {};
+    studentData.forEach((student) => {
+      if (!student.course) return;
+      const dept =
+        departmentLookup.byId[student.course] ||
+        departmentLookup.byCode[student.course] ||
+        departmentLookup.byName[student.course];
+      if (!dept || !dept._id) return;
+      studentCountsByDepartmentId[dept._id] =
+        (studentCountsByDepartmentId[dept._id] || 0) + 1;
+    });
+
+    const byDepartment = departmentData
+      .map((dept) => ({
+        department: dept.name,
+        code: dept.code,
+        count: studentCountsByDepartmentId[dept._id] || 0
+      }))
       .sort((a, b) => b.count - a.count);
 
     // Group by course (from student data)
     const courseGroups = studentData.reduce((acc, student) => {
-      const course = student.course || 'Unknown';
+      const course = getDepartmentLabel(student.course);
       acc[course] = (acc[course] || 0) + 1;
       return acc;
     }, {});
