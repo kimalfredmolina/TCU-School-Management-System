@@ -11,6 +11,11 @@
 docker compose up --build
 ```
 
+-  To build easily all .dockerignore, Dockerfile, compose.yml etc
+```bash
+docker init
+```
+
 ## 1.0. Backend Installation Guide (Node.js + Express + MongoDB)
 
 -  Express - Web framework (like Cloud Functions in Firebase)
@@ -60,19 +65,19 @@ PORT=5000
 npm create vite@latest ./ -- --template react
 ```
 
-### 2.2. Tailwind Autoprefixer Installation
+### 2.1. Tailwind Autoprefixer Installation
 
 ```bash
 npm install -D tailwindcss postcss autoprefixer
 ```
 
-### 2.3. Tailwind Installation
+### 2.2. Tailwind Installation
 
 ```bash
 npm install tailwindcss @tailwindcss/vite
 ```
 
-### 2.4. After Installation, Setup or add this codes in vite.config.js
+### 2.3. After Installation, Setup or add this codes in vite.config.js
 
 ```js
 import { defineConfig } from "vite";
@@ -88,7 +93,7 @@ export default defineConfig({
 });
 ```
 
-### 2.5. Add a file name (tailwind.config.js) if the installation dont work and copy this code
+### 2.4. Add a file name (tailwind.config.js) if the installation dont work and copy this code
 
 ```js
 /** @type {import('tailwindcss').Config} */
@@ -101,7 +106,7 @@ export default {
 };
 ```
 
-### 2.6. Add this code in index.css (file path src)
+### 2.5. Add this code in index.css (file path src)
 
 ```css
 @import "tailwindcss";
