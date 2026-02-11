@@ -1,8 +1,15 @@
-# React.js + Node.js + TailwindCSS + Express + MongoDB Installation
+# React.js, Node.js, TailwindCSS, Express, MongoDB, and Docker
 
 ## Important Installations
 
 - 🛠️ NodeJs ([Install here if you dont have](https://nodejs.org/en/download))
+  
+## 0.0 Docker Build
+
+- Build Docker if package.json and docker-compose.yml changed
+```bash
+docker compose up --build
+```
 
 ## 1.0. Backend Installation Guide (Node.js + Express + MongoDB)
 
