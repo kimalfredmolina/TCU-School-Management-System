@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AddStudentModal from '../components/AddStudentModal';
 
-const API_URL = 'http://localhost:5000/api/students';
-const DEPT_API_URL = 'http://localhost:5000/api/departments';
+const API_URL = 'http://localhost:5001/api/students';
+const DEPT_API_URL = 'http://localhost:5001/api/departments';
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);

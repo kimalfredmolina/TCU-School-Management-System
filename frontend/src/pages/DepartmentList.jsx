@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddDepartmentModal from '../components/AddDepartmentModal';
 
-const API_URL = 'http://localhost:5000/api/departments';
+const API_URL = 'http://localhost:5001/api/departments';
 
 const DepartmentList = () => {
   const [departments, setDepartments] = useState([]);

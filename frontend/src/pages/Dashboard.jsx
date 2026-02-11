@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Users, BookOpen, Building2, GraduationCap, TrendingUp, UserCheck, Award, Calendar } from 'lucide-react';
 
-const STUDENTS_API = 'http://localhost:5000/api/students';
-const DEPARTMENTS_API = 'http://localhost:5000/api/departments';
-const COURSES_API = 'http://localhost:5000/api/courses';
+const STUDENTS_API = 'http://localhost:5001/api/students';
+const DEPARTMENTS_API = 'http://localhost:5001/api/departments';
+const COURSES_API = 'http://localhost:5001/api/courses';
 
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
