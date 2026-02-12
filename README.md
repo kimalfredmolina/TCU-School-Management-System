@@ -7,15 +7,21 @@ A personal practice project where I’m learning and experimenting with the MERN
   
 ## 0.0 Docker Build
 
-- Build Docker if package.json and docker-compose.yml changed
+- Rebuild containers when **package.json**, **Dockerfile**, or **docker-compose.yml** changes:
 ```bash
 docker compose up --build
 ```
 
--  To build easily all .dockerignore, Dockerfile, compose.yml etc
+- Normal start (no rebuild needed — use when only source code changes and volumes are mounted):
 ```bash
-docker init
+docker compose up
 ```
+
+- Stop containers:
+```bash
+docker compose down
+```
+
 
 ## 1.0. Backend Installation Guide (Node.js + Express + MongoDB)
 
