@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AddStudentModal from '../components/AddStudentModal';
+import { API } from '../config/apiEndpoints';
 
-const API_URL = 'http://localhost:5001/api/students';
-const DEPT_API_URL = 'http://localhost:5001/api/departments';
+fetch(API.STUDENTS);
+fetch(API.DEPARTMENTS);
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
@@ -45,7 +46,7 @@ const StudentList = () => {
   const fetchStudents = async () => {
     setLoading(true);
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API.STUDENTS);
       const data = await response.json();
       setStudents(data);
     } catch (error) {
@@ -58,7 +59,7 @@ const StudentList = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await fetch(DEPT_API_URL);
+      const response = await fetch(API.DEPARTMENTS);
       if (response.ok) {
         const data = await response.json();
         setDepartments(data.data || []);
@@ -97,7 +98,7 @@ const StudentList = () => {
     try {
       if (editId) {
         // Update existing student
-        const response = await fetch(`${API_URL}/${editId}`, {
+        const response = await fetch(`${API.STUDENTS}/${editId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -108,7 +109,7 @@ const StudentList = () => {
         }
       } else {
         // Create new student
-        const response = await fetch(API_URL, {
+        const response = await fetch(API.STUDENTS, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -161,7 +162,7 @@ const StudentList = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
+      const response = await fetch(`${API.STUDENTS}/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -190,7 +191,7 @@ const StudentList = () => {
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Student Management System</h1>
+          <h1 className="text-3xl font-bold text-gray-800">Student Data List</h1>
           <button
             onClick={openAddModal}
             className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition"

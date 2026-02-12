@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AddDepartmentModal from '../components/AddDepartmentModal';
+import { API } from '../config/apiEndpoints';
 
-const API_URL = 'http://localhost:5001/api/departments';
+fetch(API.DEPARTMENTS);
 
 const DepartmentList = () => {
   const [departments, setDepartments] = useState([]);
@@ -26,7 +27,7 @@ const DepartmentList = () => {
   const fetchDepartments = async () => {
     setLoading(true);
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API.DEPARTMENTS);
       if (response.ok) {
         const data = await response.json();
         setDepartments(data.data || []);
@@ -53,7 +54,7 @@ const DepartmentList = () => {
     try {
       if (editId) {
         // Update existing department
-        const response = await fetch(`${API_URL}/${editId}`, {
+        const response = await fetch(`${API.DEPARTMENTS}/${editId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -66,7 +67,7 @@ const DepartmentList = () => {
         }
       } else {
         // Create new department
-        const response = await fetch(API_URL, {
+        const response = await fetch(API.DEPARTMENTS, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -98,7 +99,7 @@ const DepartmentList = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
+      const response = await fetch(`${API.DEPARTMENTS}/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {

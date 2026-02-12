@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AddCourseModal from '../components/AddCourseModal';
+import { API } from '../config/apiEndpoints';
 
-const API_URL = 'http://localhost:5001/api/courses';
-const DEPT_API_URL = 'http://localhost:5001/api/departments';
+fetch(API.COURSES);
+fetch(API.DEPARTMENTS);
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -32,7 +33,7 @@ const CourseList = () => {
   const fetchCourses = async () => {
     setLoading(true);
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API.COURSES);
       if (response.ok) {
         const data = await response.json();
         setCourses(data.data || []);
@@ -46,7 +47,7 @@ const CourseList = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await fetch(DEPT_API_URL);
+      const response = await fetch(API.DEPARTMENTS);
       if (response.ok) {
         const data = await response.json();
         setDepartments(data.data || []);
@@ -76,7 +77,7 @@ const CourseList = () => {
     try {
       if (editId) {
         // Update existing course
-        const response = await fetch(`${API_URL}/${editId}`, {
+        const response = await fetch(`${API.COURSES}/${editId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -92,7 +93,7 @@ const CourseList = () => {
         }
       } else {
         // Create new course
-        const response = await fetch(API_URL, {
+        const response = await fetch(API.COURSES, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
@@ -136,7 +137,7 @@ const CourseList = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
+      const response = await fetch(`${API.COURSES}/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {

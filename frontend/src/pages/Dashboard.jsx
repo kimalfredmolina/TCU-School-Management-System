@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Users, BookOpen, Building2, GraduationCap, TrendingUp, UserCheck, Award, Calendar } from 'lucide-react';
+import { API } from '../config/apiEndpoints';
 
-const STUDENTS_API = 'http://localhost:5001/api/students';
-const DEPARTMENTS_API = 'http://localhost:5001/api/departments';
-const COURSES_API = 'http://localhost:5001/api/courses';
+fetch(API.STUDENTS);
+fetch(API.DEPARTMENTS);
+fetch(API.COURSES);
 
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
@@ -30,9 +31,9 @@ const Dashboard = () => {
     try {
       // Fetch all data in parallel
       const [studentsRes, departmentsRes, coursesRes] = await Promise.all([
-        fetch(STUDENTS_API),
-        fetch(DEPARTMENTS_API),
-        fetch(COURSES_API)
+        fetch(API.STUDENTS),
+        fetch(API.DEPARTMENTS),
+        fetch(API.COURSES)
       ]);
 
       const studentsData = await studentsRes.json();
