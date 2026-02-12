@@ -1,4 +1,5 @@
-# React.js, Node.js, TailwindCSS, Express, MongoDB, and Docker
+# MERN Stack + Docker Learning Repo
+A personal practice project where I’m learning and experimenting with the MERN stack (MongoDB, Express, React, Node.js) and Docker, focusing on full-stack development, containerization, and real-world deployment workflows.
 
 ## Important Installations
 
