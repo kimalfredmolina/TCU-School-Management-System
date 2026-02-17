@@ -4,11 +4,25 @@ import StudentList from './pages/StudentList';
 import Dashboard from './pages/Dashboard';
 import DepartmentList from './pages/DepartmentList';
 import CourseList from './pages/CourseList';
+import Login from './authentication/Login';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('student-list');
+  const [currentPage, setCurrentPage] = useState('login');
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Handle successful login
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+    setCurrentPage('dashboard');
+  };
+
+  // LOGIN PAGE
+  if (!isAuthenticated) {
+    return <Login onLoginSuccess={handleLoginSuccess} />;
+  }
+
+  // MAIN PAGES
   return (
     <>
       <Sidebar 
@@ -17,6 +31,7 @@ function App() {
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
       />
+
       <div className={`transition-all duration-300 ${isCollapsed ? 'ml-20' : 'ml-64'}`}>
         {currentPage === 'dashboard' && <Dashboard />}
         {currentPage === 'student-list' && <StudentList />}
