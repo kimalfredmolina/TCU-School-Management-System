@@ -4,7 +4,7 @@ const Login = ({ onLoginSuccess }) => {
   const [hovered, setHovered] = useState(false)
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5000/api/auth/google";
+    window.location.href = "http://localhost:5001/api/auth/google";
   };
 
   return (
@@ -26,7 +26,7 @@ const Login = ({ onLoginSuccess }) => {
           </div>
 
           <h1 className="text-gray-900 text-2xl font-semibold tracking-tight mb-1">
-            Welcome back
+            Welcome back Admin
           </h1>
           <p className="text-gray-400 text-sm mb-8 text-center">
             Sign in to continue to your account

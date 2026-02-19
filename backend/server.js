@@ -1,41 +1,39 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const session = require("express-session");
+const passport = require("./config/passport");
 require('dotenv').config();
+
+// Import routes
+const authRoutes = require('./routes/auth');
+const studentRoutes = require('./routes/students');
+const departmentRoutes = require('./routes/departments');
+const courseRoutes = require('./routes/courses');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use(express.json());
 
-// MongoDB Connection with automatic retry
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ MongoDB connected successfully!');
-
-    // Start server only after Mongo is ready
-    app.listen(PORT, () => {
-      console.log(`🚀 Server is running on port ${PORT}`);
-      console.log(`http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error.message);
-    console.log('Retrying MongoDB connection in 5 seconds...');
-    setTimeout(connectDB, 5000); // retry every 5 seconds if Mongo not ready
+// Session & Passport (must be before routes)
+app.use(session({
+  secret: process.env.SESSION_SECRET || "secretkey",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    sameSite: "lax"
   }
-};
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-connectDB();
-
-// Import routes
-const studentRoutes = require('./routes/students');
-const departmentRoutes = require('./routes/departments');
-const courseRoutes = require('./routes/courses');
-
-// Health check route
+// Health check routes
 app.get('/', (req, res) => {
   res.json({ message: 'Backend is running!' });
 });
@@ -49,7 +47,26 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Use routes
+// Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/departments', departmentRoutes);
 app.use('/api/courses', courseRoutes);
+
+// MongoDB Connection with retry
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ MongoDB connected successfully!');
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on port ${PORT}`);
+      console.log(`http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error.message);
+    console.log('Retrying in 5 seconds...');
+    setTimeout(connectDB, 5000);
+  }
+};
+
+connectDB();
