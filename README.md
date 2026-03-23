@@ -1,6 +1,8 @@
 # MERN Stack + Docker Learning Repo
 A personal practice project where I’m learning and experimenting with the MERN stack (MongoDB, Express, React, Node.js) and Docker, focusing on full-stack development, containerization, and real-world deployment workflows.
 
+<img width="1899" height="915" alt="image" src="https://github.com/user-attachments/assets/192c6dbd-ec05-4374-87b6-223c693f014c" />
+
 ## Important Installations
 
 - 🛠️ NodeJs ([Install here if you dont have](https://nodejs.org/en/download))
